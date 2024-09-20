@@ -24,10 +24,10 @@
             padding: 40px;
             border-radius: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            width: 90vw;
-            height: 90vw;
-            max-width: 500px;
-            max-height: 500px;
+            width: 60vw; /* 너비를 60%로 설정하여 세로 직사각형 */
+            height: 80vh; /* 높이를 80%로 설정 */
+            max-width: 400px; /* 최대 너비 제한 */
+            max-height: 700px; /* 최대 높이 제한 */
         }
         h1 {
             text-align: center;
@@ -83,8 +83,8 @@
 
         @media (max-width: 600px) {
             .container {
-                width: 95vw;
-                height: 95vw;
+                width: 80vw;
+                height: 85vh;
                 padding: 30px;
             }
             h1 {
@@ -101,8 +101,8 @@
 
         @media (max-width: 400px) {
             .container {
-                width: 100vw;
-                height: 100vw;
+                width: 90vw;
+                height: 90vh;
                 padding: 20px;
             }
             h1 {
@@ -126,11 +126,11 @@
         <div class="time-inputs">
             <div>
                 <label for="hours">시간 (hh)</label>
-                <input type="number" id="hours" min="0" max="24" placeholder="시간" required>
+                <input type="number" id="hours" min="0" max="24" placeholder="시간">
             </div>
             <div>
                 <label for="minutes">분 (mm)</label>
-                <input type="number" id="minutes" min="0" max="59" placeholder="분" required>
+                <input type="number" id="minutes" min="0" max="59" placeholder="분">
             </div>
         </div>
 
@@ -148,7 +148,7 @@
             <input type="number" id="customDistance" step="0.01" min="0" placeholder="직접 입력할 거리">
         </div>
 
-        <button onclick="calculatePace()">평균 페이스 계산</button>
+        <button type="button" onclick="calculatePace()">평균 페이스 계산</button>
 
         <div class="result" id="result"></div>
 
@@ -170,8 +170,8 @@
         });
 
         function calculatePace() {
-            const hours = parseInt(document.getElementById('hours').value);
-            const minutes = parseInt(document.getElementById('minutes').value);
+            const hours = parseInt(document.getElementById('hours').value) || 0;
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
             const selectedDistance = distanceSelect.value;
             let distance = selectedDistance === 'custom' ? parseFloat(document.getElementById('customDistance').value) : parseFloat(selectedDistance);
 
