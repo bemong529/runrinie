@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마라톤 페이스 계산기</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+        .description {
+            font-size: 1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.5em;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #7f8c8d;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #2980b9;
+            outline: none;
+        }
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #3498db;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.4em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+        footer a {
+            color: #2980b9;
+            text-decoration: none; /* 밑줄 기본 제거 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>마라톤 페이스 계산기</h2>
+        <p class="description">
+            목표 시간과 거리를 선택하시면,<br> 
+            평균 페이스를 계산해드립니다 <span class="emoji">😊</span><br><br>
+            출처: <a id="source-link" href="https://blog.naver.com/baby_monkey2" target="_blank">https://blog.naver.com/baby_monkey2</a>
+        </p>
+
+        <div class="input-group">
+            <label for="hours">시간 (시간):</label>
+            <input type="number" id="hours" min="0" placeholder="시간 입력">
+        </div>
+        <div class="input-group">
+            <label for="minutes">분 (분):</label>
+            <input type="number" id="minutes" min="0" placeholder="분 입력">
+        </div>
+        <div class="input-group">
+            <label for="distance">거리 (km):</label>
+            <select id="distance">
+                <option value="5">5km</option>
+                <option value="10">10km</option>
+                <option value="21.0975">하프 마라톤 (21.1km)</option>
+                <option value="42.195">풀 마라톤 (42.195km)</option>
+            </select>
+        </div>
+        <button onclick="calculatePace()">페이스 계산</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 밑줄 제어를 위한 자바스크립트
+        const sourceLink = document.getElementById('source-link');
+
+        sourceLink.addEventListener('mouseenter', function() {
+            this.style.textDecoration = 'underline';
+        });
+
+        sourceLink.addEventListener('mouseleave', function() {
+            this.style.textDecoration = 'none';
+        });
+
+        function calculatePace() {
+            const hours = parseFloat(document.getElementById("hours").value) || 0;
+            const minutes = parseFloat(document.getElementById("minutes").value) || 0;
+            const distance = parseFloat(document.getElementById("distance").value);
+
+            const totalMinutes = (hours * 60) + minutes;
+            if (totalMinutes === 0 || distance === 0) {
+                document.getElementById("result").innerText = "유효한 시간을 입력하고 거리를 선택하세요.";
+                return;
+            }
+
+            const pace = totalMinutes / distance;
+            const paceMinutes = Math.floor(pace);
+            const paceSeconds = Math.floor((pace - paceMinutes) * 60);
+
+            document.getElementById("result").innerText = 
+                `평균 페이스는 ${paceMinutes}:${paceSeconds < 10 ? '0' : ''}${paceSeconds} 분/km 입니다.`;
+        }
+    </script>
+</body>
+</html>
